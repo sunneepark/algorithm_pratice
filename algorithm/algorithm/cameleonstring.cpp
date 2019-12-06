@@ -5,7 +5,7 @@
 using namespace std;
 
 string solution(string str) {
-
+	
 	int len = str.size();
 
 	stack<int> idx;
