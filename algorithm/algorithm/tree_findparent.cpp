@@ -6,6 +6,7 @@ int main() {
 	int n;
 	cin >> n;
 
+
 	int *tree = new int[n];
 	fill_n(tree, n, 0);
 	tree[0] = 1;
