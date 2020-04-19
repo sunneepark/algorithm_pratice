@@ -16,6 +16,10 @@ public:
 		left = NULL;
 		right = NULL;
 	}
+	node(bool isNum, string data) {
+		this->isNum = isNum;
+		this->data = data;
+	}
 };
 
 stack<double> s;
@@ -66,20 +70,19 @@ int main() {
 		cin.get();
 		node* tree = new node[total+1];
 
-		char str[15];
+		char strInput[15];
 		for (int i = 0; i < total; i++) {
-			*str = NULL;
-			cin.getline(str, 15);
+			*strInput = NULL;
+			cin.getline(strInput, 15);
 
 			char* context = NULL;
 			//strtok_r in linux
-			char* tok1 = strtok_s(str, " ", &context);
+			char* tok1 = strtok_s(strInput, " ", &context);
 			tok1 = strtok_s(NULL, " ", &context);
 
 			char *tok2;
 			if ((tok2 = strtok_s(NULL, " ", &context)) != NULL) { //연산자 일 때
-				tree[i + 1].isNum = false;
-				tree[i + 1].data = tok1;
+				tree[i + 1] = node(false, string(1,tok1[0]));
 				tree[i + 1].left = &tree[stoi(tok2)];
 				tree[i + 1].right = &tree[stoi(tok2 = strtok_s(NULL, " ", &context))];
 			}
