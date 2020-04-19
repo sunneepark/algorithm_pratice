@@ -72,7 +72,10 @@ int main() {
 			cin.getline(str, 15);
 
 			char* context = NULL;
+<<<<<<< HEAD
 			//strtok_r in linux
+=======
+>>>>>>> 54526b59d182fb0492e00797d93408338c1fbdd2
 			char* tok1 = strtok_s(str, " ", &context);
 			tok1 = strtok_s(NULL, " ", &context);
 
