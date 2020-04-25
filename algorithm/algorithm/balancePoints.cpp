@@ -27,11 +27,11 @@ void solution(vector<pair<int, int>> points, double start, double end) {
 	answer = (start + end) / 2;
 
 	if (answer - start < RATE || end - answer < RATE) {
-		cout << "end" << endl;
+		one_testcase_answer.push_back(answer);
 		return;
 	}
 
-	cout << start << end << answer << endl;
+	//cout << start << end << answer << endl;
 	vector<pair<int, int>> left;
 	vector<pair<int, int>> right;
 	for (int i = 0; i < points.size(); i++) {
