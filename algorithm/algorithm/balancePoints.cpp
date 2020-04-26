@@ -94,7 +94,8 @@ int main() {
 		for (int i = 0; i < one_testcase_answer.size(); i++) {
 			cout << " " << one_testcase_answer.at(i);
 		}
-		cout << endl;
+		if(test_case != T)
+			cout << endl;
 		one_testcase_answer.clear();
 	}
 	return 0;//정상종료시 반드시 0을 리턴해야합니다.
