@@ -17,8 +17,6 @@ void make_orimax(string num_board) {
 }
 void solution(string num_board, int change, int cur) {
 	
-	if (result == atoi(ori_max.c_str()))
-		return;
 	if (cur == change) {
 		cout << result << " o" << endl;
 		if (result < atoi(num_board.c_str()))
@@ -40,6 +38,7 @@ void solution(string num_board, int change, int cur) {
 		}
 		
 	}
+	//max¶û ºñ±³
 	bool out = true;
 	int start = cur;
 	while (out && start < num_board.size()-1) {
