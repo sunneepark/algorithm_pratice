@@ -1,7 +1,6 @@
 #include <string>
 #include <vector>
 #include <iostream>
-#include <stack>
 using namespace std;
 
 int findDigitNum(int num) {
@@ -13,29 +12,27 @@ int solution(string s) {
 
 	for (int i = 1; i <= s.size() / 2; i++) { //size가 2부터 n/2까지
 		int temp = s.size();
-		stack<string> storePrior;
+		pair<string, int> prior("", 1);
 		for (int j = 0; j+(2*i) <= s.size(); j += i) {
 			string c1 = s.substr(j, i);
 			string c2 = s.substr(j+i, i);
 
 			if (c1 == c2) {
-				if (storePrior.empty() || storePrior.top() == c1) storePrior.push(c1); //비었거나 이전이 같을때
-				else { //새로 만들어야 할 때
-					int digitNum = findDigitNum(storePrior.size()+1);
-					//cout << storePrior.size()+1<<"digit" << digitNum << endl;
-					temp -= ((storePrior.size() + 1)*i)-digitNum - i; //원래크기 - 중복된수(자리) - 크기
-					while (!storePrior.empty()) storePrior.pop();
-					storePrior.push(c1);
+				if (prior.first == "" || prior.first == c1) {
+					prior.first = c1; prior.second++;
 				}
-				//cout << storePrior.top() << endl;
+				else {
+					int digitNum = findDigitNum(prior.second);
+					temp -= ((prior.second)*i) - digitNum - i; //원래크기 - 중복된수(자리) - 크기
+					prior = make_pair(c1, 2);
+				}
 			}
 		}
-		if (!storePrior.empty()) {
-			int digitNum = findDigitNum(storePrior.size() + 1);
-			//cout << storePrior.size() + 1 << "digit" << digitNum << endl;
-			temp -= ((storePrior.size() + 1) * i) - digitNum - i; //원래크기 - 중복된수(자리) - 크기
+		if (prior.first != "") {
+			int digitNum = findDigitNum(prior.second);
+			temp -= ((prior.second)*i) - digitNum - i; //원래크기 - 중복된수(자리) - 크기
 		}
-	
+
 		if (answer > temp)
 			answer = temp;
 	}
@@ -43,5 +40,5 @@ int solution(string s) {
 }
 
 int main() {
-	cout << solution("aaaaaaaaaaaaaaaa") << endl;
+	cout << solution("abcabc") << endl;
 }
