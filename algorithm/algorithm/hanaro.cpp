@@ -66,6 +66,10 @@ int main(int argc, char** argv)
 		double e = 0.0;
 		cin >> e;
 
+		/*long long e = 0;
+		cin >> e;
+		cin.ignore(256,'\n');*/ //long long 입력 받기
+	
 		visited = new int[n];
 		for (int i = 0; i < n; i++)
 			visited[i] = i;
