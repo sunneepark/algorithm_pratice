@@ -29,20 +29,26 @@ string solution(vector<int> numbers, string hand) {
 	int left = 10; int right = 12; //현재위치
 
 	for (int i : numbers) {
-		if (i == 0 || i % 3 == 2) { //가운데줄
-			pair<int, int> des = calCoor(i);
-			int disLeft = calDis(calCoor(left), des);
-			int disRight = calDis(calCoor(right), des);
+		if ((i == 0) || i % 3 == 2) { //가운데줄
+			i = (i == 0) ? 11 : i;
 
-			if (disLeft > disRight) { answer += "R"; right = i; }
-			else if (disLeft < disRight) { answer += "L"; left = i; }
+			int leftDis = 0;
+			if ((left % 3) == 1) { leftDis += 1; leftDis += abs(left + 1 - i) / 3;}
+			else leftDis += abs(left - i) / 3;
+
+			int rightDis = 0;
+			if ((right % 3) == 0) { rightDis += 1; rightDis += abs(right-1 - i) / 3;}
+			else rightDis += abs(right - i) / 3;		
+
+			if(leftDis > rightDis) { answer += "R";  right = i; }
+			else if(leftDis < rightDis) { answer += "L";  left = i; }
 			else {
-				if(hand == "right") { answer += "R"; right = i; }
-				else { answer += "L"; left = i; }
+				if(hand == "right") { answer += "R";  right = i; }
+				else { answer += "L";  left = i; }
 			}
 		}
-		else if (i % 3 == 1) { answer += "L";  left = i; }
-		else if (i % 3 == 0) { answer += "R";  right = i; }
+		else if (i % 3 == 1) { answer += "L";  left = i; } //왼쪽 줄
+		else if (i % 3 == 0) { answer += "R";  right = i; } // 오른쪽 줄
 	}
 
 	return answer;
