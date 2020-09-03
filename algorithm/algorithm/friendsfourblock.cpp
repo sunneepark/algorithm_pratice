@@ -8,22 +8,27 @@ using namespace std;
 
 int solution(int m, int n, vector<string> board) {
 	int answer = 0;
-	int prior = -1;
+	bool isOut = false;
 
+	/*case1*/
 	bool** success = new bool*[m];
 	for (int i = 0; i < m; i++) {
 		success[i] = new bool[n];
-		memset(success[i], false, sizeof(success[i]));
+		memset(success[i], 0, sizeof(bool)*n);
 	}
+
+	/*case2*/
+	//vector<vector<bool>> success(m, vector<bool>(n));
 
 	int dir_x[DIR_SIZE] = {1,0,1};
 	int dir_y[DIR_SIZE] = { 0,1,1 };
 
-	while (prior < answer) {
-		prior = answer;
-
+	while (!isOut) {
+		isOut = true;
 		for (string s : board)
 			cout << s << endl;
+
+
 		for (int i = 0; i < m-1; i++) {
 			for (int j = 0; j < n-1; j++) {
 				if (board[i][j] != 'a') { //빈칸이 아니라면 
@@ -33,7 +38,8 @@ int solution(int m, int n, vector<string> board) {
 							break;
 						}
 					}
-					if (k >= DIR_SIZE) { //4칸 성공이면 처음 값과 옆에줄 값 push
+					if (k >= DIR_SIZE) { //4칸 전부 성공이면, 4칸을 block 처리 
+						isOut = false;
 						success[i][j] = true;
 						for (k=0; k < DIR_SIZE; k++) {
 							success[i + dir_x[k]][j + dir_y[k]] = true;
@@ -47,6 +53,8 @@ int solution(int m, int n, vector<string> board) {
 		for (int i = 0; i < n; i++) {
 			int first_y_idx = -1;
 			bool change = false;
+
+			//열 별로 1.블럭 계산 2.블럭 아래로 밀기 
 			for (int j = 0; j < m; j++) {
 				if (success[j][i] == true) {
 					answer++;
@@ -56,7 +64,7 @@ int solution(int m, int n, vector<string> board) {
 					}
 					board[j][i] = 'a';
 				}
-				if ((success[j][i] == false || j == m-1) && change) { //해당 칸 위에 성공한적이 있어서 밀어주어야 함.
+				if ((success[j][i] == false || j == m-1) && change) { //해당 칸 위에 비어있던 것이 있으면, 아래로 밀어주어야 함. 
 					
 					int k =1;
 					int temp_y_idx = j - 1;
@@ -65,7 +73,7 @@ int solution(int m, int n, vector<string> board) {
 					}
 
 					for ( ; temp_y_idx  >= 0; temp_y_idx--) {
-						if (first_y_idx == 0 || first_y_idx - k < 0) {
+						if (first_y_idx == 0 || first_y_idx - k < 0) { //맨 윗줄이 비어졌으면(first_y_idx == 0 ), 아래로 밀 것이 없음.
 							break;
 						}
 
@@ -87,7 +95,6 @@ int solution(int m, int n, vector<string> board) {
 }
 
 int main() {
-	vector<string> board = { "CCBDE", "AAADE", "AAABF", "CCBBF" };
-	cout << solution(8, 5, { "HGNHU", "CRSHV", "UKHVL", "MJHQB", "GSHOT", "MQMJJ", "AGJKK", "QULKK" });
+	cout << solution(2, 2, { "AA","AA" });
 	return 0;
 }
